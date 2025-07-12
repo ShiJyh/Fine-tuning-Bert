@@ -7,25 +7,21 @@ from data_preprocess import load_json
 
 
 class MultiClsDataSet(Dataset):
-    def __init__(self, data_path, max_len=128, label2idx_path="./data/label2idx.json"):
-        self.label2idx = load_json(label2idx_path)
-        self.class_num = len(self.label2idx)
-        self.tokenizer = BertTokenizer.from_pretrained("bert-base-chinese")
+    def __init__(self, data_path, max_len=256, label2idx_path="./data/label2idx.json"):
+        #self.label2idx = load_json(label2idx_path)
+        self.class_num = 8
+        self.tokenizer = BertTokenizer.from_pretrained("/mnt/workspace/bert-base")
         self.max_len = max_len
         self.input_ids, self.token_type_ids, self.attention_mask, self.labels = self.encoder(data_path)
 
     def encoder(self, data_path):
         texts = []
         labels = []
-        with open(data_path, encoding="utf-8") as f:
-            for line in f:
-                line = json.loads(line)
-                texts.append(line["text"])
-                tmp_label = [0] * self.class_num
-                for label in line["label"]:
-                    tmp_label[self.label2idx[label]] = 1
-                labels.append(tmp_label)
-
+        with open(data_path,encoding='utf-8') as f:
+            data_list = json.load(f)
+        for item in data_list:
+            texts.append(item["text"])
+            labels.append(item["categories"])
         tokenizers = self.tokenizer(texts,
                                     padding=True,
                                     truncation=True,
