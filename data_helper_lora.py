@@ -41,11 +41,3 @@ class MultiClsDataSet(Dataset):
     def __getitem__(self, item):
         return self.input_ids[item],  self.attention_mask[item], \
                self.token_type_ids[item], self.labels[item]
-
-
-if __name__ == '__main__':
-    dataset = MultiClsDataSet(data_path="./data/train.json")
-    print(dataset.input_ids)
-    print(dataset.token_type_ids)
-    print(dataset.attention_mask)
-    print(dataset.labels)
