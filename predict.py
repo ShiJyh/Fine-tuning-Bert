@@ -12,7 +12,7 @@ save_model_path = "./model/multi_label_cls.pth"
 label2idx = load_json(label2idx_path)
 idx2label = {idx: label for label, idx in label2idx.items()}
 device = "cuda" if torch.cuda.is_available() else "cpu"
-tokenizer = BertTokenizer.from_pretrained("/mnt/workspace/mengzi/pytorch_model.bin")
+tokenizer = BertTokenizer.from_pretrained("/mnt/workspace/finbert1")
 max_len = 128
 
 model = BertMultiLabelCls(hidden_size=hidden_size, class_num=class_num)
